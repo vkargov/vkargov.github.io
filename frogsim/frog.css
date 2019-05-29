@@ -20,12 +20,12 @@ body {
 .again {
     position: absolute;
     left: 50%;
-    bottom: 5%;
+    bottom: 0%;
     transform: translate(-50%, -50%);
     background-color: #fffa;
     border-radius: 5px;
     padding: 1em;
-    font-size: 2em;
+    font-size: 1.5em;
 }
 
 .note {
