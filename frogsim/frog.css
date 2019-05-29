@@ -1,0 +1,49 @@
+body {
+    font-family: apple color emoji,segoe ui emoji,noto color emoji,android emoji,emojisymbols,emojione mozilla,twemoji mozilla,segoe ui symbol;
+    background: linear-gradient(-45deg, #EE7752, #E73C7E, #23A6D5, #23D5AB);
+}
+
+#position {
+    color: white;
+    position: absolute;
+    animation: 5s infinite slider linear;
+    font-size: 2em;
+}
+
+
+.again:hover {
+    background-color: #fff;
+    cursor: pointer;
+}
+.again {
+    position: absolute;
+    left: 50%;
+    bottom: 5%;
+    transform: translate(-50%, -50%);
+    background-color: #fffa;
+    border-radius: 5px;
+    padding: 1em;
+}
+
+.note {
+    transform-origin: 50% 80%;
+    position: absolute;
+    cursor: pointer;
+}
+
+@keyframes bob {
+    from {transform: rotate(-25deg);}
+    20% {transform: rotate(15deg);}
+    40% {transform: rotate(-10deg);}
+    60% {transform: rotate(5deg);}
+    80% {transform: rotate(-2deg);}
+    to {transform: rotate(0deg);}
+    
+}
+
+@keyframes slider {
+    from {left: 5%;}
+    to {left: 95%;}
+    
+}
+
