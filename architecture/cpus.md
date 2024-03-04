@@ -31,14 +31,12 @@ Maybe this information comes in handy to someone studying computer architecture 
 |Itanium Tukwila|             |            |              | HC23
 |Itanium Poulson|             |            |              | HC23
 
-One curious observation is that if we take the physical register file into account, the register file size become comparable to register file sizes in modern GPUs (per thread/lane). Although with 256-bit wide AVX, a single execution unit is comparable to 8-lane warp(wave) - compare that to 16..32 threads/lanes of execution per SIMD and dozens of warps/waves running in parallel on multiple compute units on modern GPUs.
-
 ## Caches
 
 |Model          | L1I Size | L1I ways | L1D latency | L3  Size | Sources
 |---------------|----------|----------|-------------|----------|-----------------|
 |AMD Zen        |          |          |    8 cycles |          | HC31
-|AMD Zen 2      |          |          |    7 cycles | 2x16MB  | HC31, HC33
+|AMD Zen 2      |          |          |    7 cycles | 2x16MB   | HC31, HC33
 |AMD Zen 3      |    32 KB |        8 |             | 32 MB    | HC33
 |AMD Zen 4      |          |          |             |          |
 |Itanium Tukwila|          |          |             |          | HC23
@@ -58,6 +56,23 @@ Usually, I think these numbers are given for flagship models.
 |AMD Zen 4      |          |          |
 |Itanium Tukwila|          |          | HC23
 |Itanium Poulson|          |          | HC23
+
+## Random thoughts
+
+These are some of my thoughts. Unlike the charts, they're (probably) full of mistakes and personal opinions.
+
+### CPU vs GPU register file
+
+One curious observation is that if we take the physical (as opposed to the externally visible "architectural") register file into account, the register file size (both FP and INT) become comparable to register file sizes in modern GPUs (per thread/lane).
+
+### CPU vs GPU performance
+
+Let's do a quick CPU vs GPU back of the envelope arithmetic instruction throughput comparison for a generic Zen 2 generation APU (Renoir) assuming the configuration has 8 cores, 4 ALUs per core and AVX (256 bit) native support, the CPU will be able to process:\
+$\text{8 cores} * \text{4 insts per clock} * \text{256 bits} / \text{8 bits} / \text{4 bytes per FP32 number} = \text{at most 256 FP32 instructions per clock}$\
+Compare this with the integrated graphics on the same chip that should be capable to do\
+$\text{8 CUs} * \text{4 SIMDs per CU} * \text{16 threads per SIMD} = \text{512 threads of FP32}$ (Reference: [Vega ISA](https://www.amd.com/content/dam/amd/en/documents/radeon-tech-docs/instruction-set-architectures/vega-shader-instruction-set-architecture.pdf))\
+2 times as much! For FP64, the number for the GPU shouldn't change while the CPU throughput should halve, making it 4 times as slow (and presumably more power hungry).
+Note that this is assuming the program is not memory bound which seems to happen more often than many people realize.
 
 ## Abbreviations
 AGU = Address Generation Unit (AMD term?) \
